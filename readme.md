@@ -1,7 +1,7 @@
 
 # Splitwise App
 
-The screen shot of the API swagger is in the dump folder.
+The screen shot of the **API Swagger is in the  dump folder**.
 After running the project swagger will be on http://localhost:3000/api-docs/
 
 ## Features
