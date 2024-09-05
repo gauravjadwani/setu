@@ -1,10 +1,6 @@
-
-
-
-
 const express = require('express');
 const router = express.Router();
-const redisClient = require('../config/redisConfig');  
+const redisClient = require('../config/redisConfig');
 
 /**
  * @swagger
@@ -65,11 +61,11 @@ router.post('/add', (req, res) => {
     const { groupId, expense } = req.body;
     const { amount, splitBetween, paidBy } = expense;
 
-    // Total amount split between users (assumed percentage-based split)
+
     splitBetween.forEach(person => {
         const amountOwed = (person.percentage / 100) * amount;
 
-        // Update balance between payer and each participant
+
         const balanceKeyPayer = `user:${paidBy}:balances:${person.user}`;
         const balanceKeyParticipant = `user:${person.user}:balances:${paidBy}`;
 

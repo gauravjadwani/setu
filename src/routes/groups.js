@@ -1,3 +1,7 @@
+const express = require('express');
+const router = express.Router();
+const redisClient = require('../config/redisConfig');  
+
 /**
  * @swagger
  * components:
@@ -54,9 +58,7 @@
  *       500:
  *         description: Internal server error
  */
-const express = require('express');
-const router = express.Router();
-const redisClient = require('../config/redisConfig');  
+
 router.post('/create', async (req, res) => {
     const { groupId, groupName, members } = req.body;
 
@@ -86,18 +88,12 @@ router.post('/create', async (req, res) => {
         };
 
         await redisClient.hset(`group:${groupId}:meta`, groupMeta);
-        
-        // Optionally, you could also store group members in a separate key for easier management
-        // await redisClient.sadd(`group:${groupId}:members`, members);
-
         res.status(201).send(`Group ${groupName} created successfully.`);
     } catch (e) {
         console.log(e);
         return res.status(500).send('Error creating group.');
     }
 });
-
-//-------------------------------------------------------------
 
 /**
  * @swagger
@@ -170,9 +166,6 @@ router.post('/:groupId/members/add', async (req, res) => {
     }
 });
 
-// ------------------------------------------------------------
-
-
 
 /**
  * @swagger
@@ -239,10 +232,6 @@ router.post('/:groupId/members/remove', async (req, res) => {
 
 module.exports = router;
 
-
-
-
-//-------------------------------------------------------------
 // Get group details
 /**
  * @swagger

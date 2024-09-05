@@ -1,4 +1,4 @@
-// routes/users.js
+
 const express = require('express');
 const router = express.Router();
 const redisClient = require('../config/redisConfig');  
@@ -113,7 +113,7 @@ router.post('/', async (req, res) => {
 router.get('/:userId/liability', (req, res) => {
     const { userId } = req.params;
 
-    // Get all balance records for this user
+
     redisClient.hgetall(`user:${userId}:balances`, (err, balances) => {
         if (err) return res.status(500).send('Error fetching balances.');
         if (!balances) return res.status(404).send('No balances found for this user.');
@@ -121,7 +121,7 @@ router.get('/:userId/liability', (req, res) => {
         let totalOwed = 0;
         let totalTake = 0;
 
-        // Calculate total amounts owed or to take
+
         for (const [otherUser, balance] of Object.entries(balances)) {
             if (balance < 0) {
                 totalOwed += Math.abs(balance); // This user owes others
